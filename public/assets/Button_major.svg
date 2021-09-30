@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="119px" height="36px" viewBox="0 0 119 36" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Button_major</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Anamnézis-v2---űrlap-mező-modal---új-és-szerkesztés" transform="translate(-448.000000, -809.000000)">
+            <g id="Button_major" transform="translate(448.000000, 809.000000)">
+                <rect id="Rectangle-10" fill="#5F6EC6" x="0" y="0" width="119" height="36" rx="3"></rect>
+                <text id="Létrehozás" font-family="SFProText-Regular, SF Pro Text" font-size="14" font-weight="normal" fill="#FFFFFF">
+                    <tspan x="22" y="23">Létrehozás</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

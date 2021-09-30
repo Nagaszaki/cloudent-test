@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="12px" height="26px" viewBox="0 0 12 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Drag handle</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Anamnézis-v2-Beállítások-2" transform="translate(-320.000000, -348.000000)" fill="#637381">
+            <g id="Group" transform="translate(303.000000, 73.000000)">
+                <g id="Anamnezis_area" transform="translate(1.000000, 258.000000)">
+                    <g id="Question-1" transform="translate(1.000000, 0.000000)">
+                        <g id="Drag-handle" transform="translate(15.000000, 17.000000)">
+                            <circle id="Oval" cx="2" cy="2" r="2"></circle>
+                            <circle id="Oval-Copy" cx="10" cy="2" r="2"></circle>
+                            <circle id="Oval-Copy-3" cx="2" cy="10" r="2"></circle>
+                            <circle id="Oval-Copy-4" cx="2" cy="17" r="2"></circle>
+                            <circle id="Oval-Copy-6" cx="2" cy="24" r="2"></circle>
+                            <circle id="Oval-Copy-2" cx="10" cy="10" r="2"></circle>
+                            <circle id="Oval-Copy-5" cx="10" cy="17" r="2"></circle>
+                            <circle id="Oval-Copy-7" cx="10" cy="24" r="2"></circle>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
