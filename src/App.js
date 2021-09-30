@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { Modal } from './components/modal';
 import { GlobalStyle } from './globalStyle';
+
 const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -28,7 +29,7 @@ function App() {
   return (
     <>
       <Container>
-        <Button onClick={openModal}>I'm a modal</Button>
+        <Button onClick={openModal}>Új mező hozzáadása</Button>
         <Modal showModal={showModal} 
         setShowModal={setShowModal}></Modal>
         <GlobalStyle/>

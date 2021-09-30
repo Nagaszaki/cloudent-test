@@ -1,7 +1,9 @@
-import React, {useRef,useEffect,useCallback} from 'react';
+import React, {useRef,useEffect,useCallback,useState} from 'react';
 import styled from 'styled-components';
 import {useSpring, animated} from 'react-spring';
 import {MdClose} from 'react-icons/md';
+import Switch from './switch/switch';
+
 const Background = styled.div`
   width: 100%;
   height: 100%;
@@ -12,21 +14,14 @@ const Background = styled.div`
   align-items: center;
 `
 
-const ModalWrapper = styled.div`
+const ModalContent = styled.div`
   width: 800px;
   height: 500px;
   box-shadow: 0 5px 16px rgba(0,0,0,0.2);
-  background: #fff;
-  color: #000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  grid-template-columns: 1fr 1fr;
   position: relative;
   z-index: 10;
   border-radius: 10px;
-`
-const ModalContent = styled.div`
+  background: #fff;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -85,19 +80,37 @@ useEffect(() => {
   return () => document.removeEventListener('keydown',keyPress)
 },[keyPress]);
 
+const [isToggled, setIsToggled] = useState(false);
+
   return(
     <>
       {showModal ? (
         <Background ref={modalRef} onClick={closeModal}>
           <animated.div style={animation}>
-            <ModalWrapper showModal={showModal}>
-              <ModalContent>
-                <h1>Content head</h1>
-                <p>Content Content</p>
-                <button>Clicken Me</button>
+            <ModalContent showModal={showModal}>
+              <h1>Űrlap mező hozzáadása</h1>
+              <div>
+              <label for="form-style">Űrlap mező típusa:
+                <select name="form-style" id="form-style">
+                  <option selected disabled>Válassz egy opciót</option>
+                  <option value="boolean">Eldöntendő</option>
+                  <option value="textarea">Kifejtendő</option>
+                </select>
+              </label>
+              <label for="default_value">
+                 Alapértelmezett állapot:
+                <input type="radio" name="default_value" value="none"></input>
+                <label for="none">Nincs</label>
+                <input type="radio" name="default_value" value="yes"></input>
+                <label for="yes">Igen</label>
+                <input type="radio" name="default_value" value="no"></input>
+                <label for="no">Nem</label>
+                </label>
+              </div>
+              <Switch rounded={true}/>
+              <Switch rounded={true}/>
               </ModalContent>
-              <CloseModalButton aria-label='Close modal' onClick={() => setShowModal(prev=>!prev)}/>
-            </ModalWrapper>
+            <CloseModalButton aria-label='Close modal' onClick={() => setShowModal(prev=>!prev)}/>
           </animated.div>
         </Background>
       ) : null}
