@@ -3,4 +3,59 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  width: 100%;
+
+  .status {
+    padding: 10px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    border-bottom: 1px solid #707070;
+    width: 100%;
+  }
+
+  label {
+    width: 100%;
+    select {
+      width: 100%;
+      height: 35px;
+    }
+  }
+
+  .radio {
+    label,
+    input {
+      margin-right: 10px;
+    }
+
+    input[type="radio"] {
+      opacity: 0;
+      position: absolute;
+      margin-top: 5px;
+    }
+
+    input[type="radio"] + *::before {
+      content: "";
+      display: inline-block;
+      vertical-align: middle;
+      width: 0.9rem;
+      height: 0.9rem;
+      margin-right: 0.3rem;
+      border-radius: 50%;
+      border-style: solid;
+      border-width: 0.1rem;
+      border-color: gray;
+    }
+
+    input[type="radio"]:checked + *::before {
+      background: radial-gradient(
+        SlateBlue 0%,
+        SlateBlue 40%,
+        transparent 50%,
+        transparent
+      );
+      border-color: SlateBlue;
+    }
+  }
 }

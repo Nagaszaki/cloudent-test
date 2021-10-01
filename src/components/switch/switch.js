@@ -7,7 +7,7 @@ const Switch = ({ rounded = false,data}) => {
     'rounded': rounded
   });
   return (
-    <div>
+    <div className="switchbox">
         <h3>{data}</h3>
       <label className="switch">
         <input type="checkbox"/>

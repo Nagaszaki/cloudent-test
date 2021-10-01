@@ -10,9 +10,10 @@ const Header = styled.div`
   left:0px;
   padding:5px 10px;
   position: absolute;
-  background-color: #2196f3;
+  background-color: SlateGray;
   color:white;
   width: 100%;
+  font-weight:300;
 `;
 
 const Background = styled.div`
@@ -26,24 +27,21 @@ const Background = styled.div`
 `;
 
 const ModalContent = styled.div`
+  padding: 50px 20px;
   width: 800px;
-  height: 500px;
+  height: 800px;
   box-shadow: 0 5px 16px rgba(0,0,0,0.2);
   position: relative;
   z-index: 10;
   border-radius: 10px;
-  background: #fff;
+  background: lightgray;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   line-height: 1.8;
   color: #141414;
 
-`;
-const ModalWrapper = styled.div`
-  display: grid;
-  grid-template-rows: 1fr 0.1fr;
 `;
 
 const CloseModalButton = styled(MdClose)`
@@ -56,6 +54,55 @@ const CloseModalButton = styled(MdClose)`
   padding: 0;
   z-index: 10;
 `;
+
+const Block = styled.div`
+  margin:10px;
+  padding:10px 0px;
+  width: 100%;
+  background-color: #fff;
+  border: 1px solid #707070;
+  border-radius:5px;
+  display:flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items:center;
+
+  & >h3{
+    padding-left: 30px;
+    align-self:flex-start;
+  }
+
+  & .textarea{
+    width: 95%;
+    height: 40px;
+  }
+`
+
+const ButtonContainer = styled.div`
+  width:100%;
+  display:flex;
+  justify-content: space-between;
+
+  & button {
+    border-radius:5px;
+    margin:5px;
+    padding:10px 15px;
+    border: 0px;
+    background-color:white;
+    cursor:pointer;
+  }
+
+  & .left{
+    background-color:Tomato;
+    color:white;
+    justify-self:flex-start;
+  }
+
+  & .right button:nth-child(2){
+    background-color:SlateBlue;
+    color:white;
+  }
+` 
 
 export const Modal = ({showModal,setShowModal}) =>{
   const modalRef = useRef()
@@ -96,23 +143,27 @@ export const Modal = ({showModal,setShowModal}) =>{
         <Background ref={modalRef} onClick={closeModal}>
           <animated.div style={animation}>
             <ModalContent showModal={showModal}>
-              <ModalWrapper>
-              <div>
                 <Header>
                 Új űrlap mező hozzáadása
                 <CloseModalButton aria-label='Close modal' onClick={() => setShowModal(prev=>!prev)}/>
                 </Header>
-                <Form/>
-                <Switch rounded={true} data={list[0]}/>
-                <Switch rounded={true} data={list[1]}/>
-              </div>
-              <div>
+                <Block>
+                  <Form/>
+                  <Switch rounded={true} data={list[0]}/>
+                  <Switch rounded={true} data={list[1]}/>
+                </Block>
+              <Block>
                 <h3>Mező elnevezése</h3>
-                <input type="textarea"></input>
-              </div>
-              </ModalWrapper>
+                <input className="textarea" type="textarea"/>
+              </Block>
+              <ButtonContainer>
+                <button className="left">Mező törlése</button>
+                <div className="right">
+                  <button onClick={() => setShowModal(prev=>!prev)}>Mégsem</button>
+                  <button>Létrehozás</button>
+                </div>
+              </ButtonContainer>
               </ModalContent>
-              <button>Létrehozás</button>
           </animated.div>
         </Background>
       ) : null}

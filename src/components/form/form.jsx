@@ -19,6 +19,7 @@ export default function Form() {
   ];
   return (
     <div className="form">
+      <div className="status">
       <label for="form-style">
         <h3>Űrlap mező típusa:</h3>
         <select name="form-style" id="form-style">
@@ -27,15 +28,20 @@ export default function Form() {
           <option value="textarea">Kifejtendő</option>
         </select>
       </label>
-      <label>
-        <h3>Alapértelmezett állapot:</h3>
-        {basic_value.map((item) => (
-          <>
-            <input type="radio" name="default_value" value={item.value}></input>
-            <label for={item.value}>{item.tag}</label>
-          </>
-        ))};
+      </div>
+      <div className="status">
+        <label>
+          <h3>Alapértelmezett állapot:</h3>
+          <div className="radio">
+            {basic_value.map((item) => (
+              <>
+                <input type="radio" name="default_value" value={item.value}></input>
+                <label for={item.value}>{item.tag}</label>
+              </>
+            ))}
+          </div>
         </label>
       </div>
+    </div>
   )
 }
