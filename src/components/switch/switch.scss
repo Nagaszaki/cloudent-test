@@ -2,7 +2,7 @@ input:checked + .slider {
   background-color: SlateBlue;
 
   &:before {
-    transform: translateX(28px);
+    transform: translateX(19px);
   }
 }
 
@@ -23,7 +23,7 @@ input:checked + .slider {
   display: inline-block;
   width: 60px;
   height: 20px;
-  max-width: 50px;
+  max-width: 39px;
 
   & input {
     opacity: 0;

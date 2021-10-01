@@ -1,9 +1,9 @@
-import React, {useRef,useEffect,useCallback} from 'react';
+import React, {useRef,useEffect,useCallback,useState} from 'react';
 import styled from 'styled-components';
 import {useSpring, animated} from 'react-spring';
 import {MdClose} from 'react-icons/md';
-import Switch from './switch/switch';
-import Form from './form/form';
+import Switch from '../switch/switch';
+import Form from '../form/form';
 
 const Header = styled.div`
   top:0px;
@@ -28,7 +28,7 @@ const Background = styled.div`
 
 const ModalContent = styled.div`
   padding: 50px 20px;
-  width: 800px;
+  width: 660px;
   height: 800px;
   box-shadow: 0 5px 16px rgba(0,0,0,0.2);
   position: relative;
@@ -57,7 +57,6 @@ const CloseModalButton = styled(MdClose)`
 
 const Block = styled.div`
   margin:10px;
-  padding:10px 0px;
   width: 100%;
   background-color: #fff;
   border: 1px solid #707070;
@@ -75,8 +74,9 @@ const Block = styled.div`
   & .textarea{
     width: 95%;
     height: 40px;
+    margin-bottom: 10px;
   }
-`
+`;
 
 const ButtonContainer = styled.div`
   width:100%;
@@ -102,10 +102,10 @@ const ButtonContainer = styled.div`
     background-color:SlateBlue;
     color:white;
   }
-` 
+`;
 
-export const Modal = ({showModal,setShowModal}) =>{
-  const modalRef = useRef()
+export const Modal = ({showModal,setShowModal,save}) =>{
+  const modalRef = useRef();
 
   const animation = useSpring({
     config:{
@@ -113,7 +113,7 @@ export const Modal = ({showModal,setShowModal}) =>{
     },
     opacity: showModal ? 1: 0,
     transform: showModal ? `translateY(0%)` : `translateY(-100%)`
-  })
+  });
 
   const closeModal = e =>{
     if(modalRef.current === e.target){
@@ -134,8 +134,26 @@ export const Modal = ({showModal,setShowModal}) =>{
 
   const list = ["Kitöltött állapotban jelenítse meg a bal oldali figyelmeztető sávban, a páciens kartonban",
   "Megjelenítés a páciens portálon"
-  ]
+  ];
 
+  const [formName, setFormName] = useState('');
+  const [formType, setFormType] = useState('');
+  const handleChange = (e) =>{
+    const {value} = e.target;
+    setFormName(value);
+  };
+
+  const handleSave = () => {
+    if(formType !== '' && formName !== ''){
+      let formObj = {};
+      formObj['name'] = formName;
+      formObj['type'] = formType;
+      save(formObj);
+      setFormType('');
+    } else {
+      alert('Kérem válassza ki a form típusát és töltse ki a név mezőt!');
+    }
+  }
 
   return(
     <>
@@ -148,19 +166,19 @@ export const Modal = ({showModal,setShowModal}) =>{
                 <CloseModalButton aria-label='Close modal' onClick={() => setShowModal(prev=>!prev)}/>
                 </Header>
                 <Block>
-                  <Form/>
+                  <Form formType={formType} setFormType={setFormType}/>
                   <Switch rounded={true} data={list[0]}/>
                   <Switch rounded={true} data={list[1]}/>
                 </Block>
               <Block>
                 <h3>Mező elnevezése</h3>
-                <input className="textarea" type="textarea"/>
+                <input className="textarea" type="textarea" value = {formName} onChange = {handleChange}/>
               </Block>
               <ButtonContainer>
                 <button className="left">Mező törlése</button>
                 <div className="right">
                   <button onClick={() => setShowModal(prev=>!prev)}>Mégsem</button>
-                  <button>Létrehozás</button>
+                  <button onClick={handleSave}>Létrehozás</button>
                 </div>
               </ButtonContainer>
               </ModalContent>
@@ -169,4 +187,4 @@ export const Modal = ({showModal,setShowModal}) =>{
       ) : null}
     </>
   )
-}
+};

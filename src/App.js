@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import { Modal } from './components/modal';
+import { Modal } from './components/modal/modal';
 import { GlobalStyle } from './globalStyle';
 
 const Container = styled.div`
@@ -26,12 +26,26 @@ function App() {
   const openModal = () => {
     setShowModal(prev => !prev);
   }
+
+  const [list,setList] = useState([]);
+
+  const saveForm = (formObj) =>{
+    let tempList = list;
+    tempList.push(formObj);
+    setList(tempList);
+    setShowModal(false);
+  }
+
   return (
     <>
       <Container>
+        {list.map((obj)=> 
+          <li>{obj.name}</li>
+        )}
         <Button onClick={openModal}>Új mező hozzáadása</Button>
         <Modal showModal={showModal} 
-        setShowModal={setShowModal}></Modal>
+        setShowModal={setShowModal}
+        save = {saveForm}></Modal>
         <GlobalStyle/>
       </Container>
     </>

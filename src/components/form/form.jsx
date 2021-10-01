@@ -1,7 +1,7 @@
 import React from 'react';
 import './form.scss';
 
-export default function Form() {
+export default function Form({formType,setFormType}) {
 
   const basic_value = [
     {
@@ -17,15 +17,22 @@ export default function Form() {
       value: 'no'
     },    
   ];
+
+  const handleChange = (e) =>{
+    const {value} = e.target;
+    setFormType(value);
+  };
+
+
   return (
     <div className="form">
       <div className="status">
       <label for="form-style">
         <h3>Űrlap mező típusa:</h3>
-        <select name="form-style" id="form-style">
+        <select name="form-style" id="form-style" onChange = {handleChange}>
           <option selected disabled>Válassz egy opciót</option>
-          <option value="boolean">Eldöntendő</option>
-          <option value="textarea">Kifejtendő</option>
+          <option value="bool">Eldöntendő</option>
+          <option value="text">Kifejtendő</option>
         </select>
       </label>
       </div>
