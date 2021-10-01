@@ -104,7 +104,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-export const Modal = ({showModal,setShowModal,save}) =>{
+export const Modal = ({showModal,setShowModal,save,deleteForm}) =>{
   const modalRef = useRef();
 
   const animation = useSpring({
@@ -118,6 +118,8 @@ export const Modal = ({showModal,setShowModal,save}) =>{
   const closeModal = e =>{
     if(modalRef.current === e.target){
       setShowModal(false);
+      setFormType('');
+      setFormName('');
     }
   };
   
@@ -138,6 +140,7 @@ export const Modal = ({showModal,setShowModal,save}) =>{
 
   const [formName, setFormName] = useState('');
   const [formType, setFormType] = useState('');
+
   const handleChange = (e) =>{
     const {value} = e.target;
     setFormName(value);
@@ -150,9 +153,14 @@ export const Modal = ({showModal,setShowModal,save}) =>{
       formObj['type'] = formType;
       save(formObj);
       setFormType('');
+      setFormName('');
     } else {
       alert('Kérem válassza ki a form típusát és töltse ki a név mezőt!');
     }
+  }
+
+  const handleDelete = () =>{
+    deleteForm(0);
   }
 
   return(
@@ -166,7 +174,7 @@ export const Modal = ({showModal,setShowModal,save}) =>{
                 <CloseModalButton aria-label='Close modal' onClick={() => setShowModal(prev=>!prev)}/>
                 </Header>
                 <Block>
-                  <Form formType={formType} setFormType={setFormType}/>
+                  <Form setFormType={setFormType}/>
                   <Switch rounded={true} data={list[0]}/>
                   <Switch rounded={true} data={list[1]}/>
                 </Block>
@@ -175,9 +183,9 @@ export const Modal = ({showModal,setShowModal,save}) =>{
                 <input className="textarea" type="textarea" value = {formName} onChange = {handleChange}/>
               </Block>
               <ButtonContainer>
-                <button className="left">Mező törlése</button>
+                <button className="left" onClick={handleDelete}>Mező törlése</button>
                 <div className="right">
-                  <button onClick={() => setShowModal(prev=>!prev)}>Mégsem</button>
+                  <button onClick={() => (setShowModal(prev=>!prev), setFormType(''), setFormName(''))}>Mégsem</button>
                   <button onClick={handleSave}>Létrehozás</button>
                 </div>
               </ButtonContainer>

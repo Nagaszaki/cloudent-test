@@ -1,7 +1,7 @@
 import React from 'react';
 import './form.scss';
 
-export default function Form({formType,setFormType}) {
+export default function Form({setFormType}) {
 
   const basic_value = [
     {
