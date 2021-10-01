@@ -1,0 +1,25 @@
+.welcome {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 10px;
+  h2,
+  h3 {
+    padding: 10px;
+    font-weight: 500;
+  }
+
+  p {
+    font-weight: 300;
+  }
+
+  .information {
+    padding: 10px;
+    display: flex;
+    background-color: rgba(72, 61, 139, 0.3);
+    border-radius: 5px;
+    img {
+      margin: 10px;
+    }
+  }
+}
