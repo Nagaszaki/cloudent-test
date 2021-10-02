@@ -42,7 +42,8 @@ const ModalContent = styled.div`
   line-height: 1.8;
   color: #141414;
   @media only screen and (max-width: 700px){
-    width:80vw;
+    width:90vw;
+    height: 90vh;
   }
 
 `;
@@ -68,6 +69,17 @@ const Block = styled.div`
   flex-direction: column;
   justify-content:center;
   align-items:center;
+
+  h3{
+    @media only screen and (max-width: 700px){
+      font-size:14px;
+    }
+  }
+  label{
+    @media only screen and (max-width: 700px){
+      font-size:12px;
+    }
+  }
 
   & >h3{
     padding-left: 30px;
@@ -99,6 +111,16 @@ const ButtonContainer = styled.div`
     background-color:Tomato;
     color:white;
     justify-self:flex-start;
+
+    @media only screen and (max-width: 700px){
+      padding:2px;
+    }
+  }
+  .right{
+    @media only screen and (max-width: 700px){
+      display:flex;
+      flex-direction:row;
+    }
   }
 
   & .right button:nth-child(2){

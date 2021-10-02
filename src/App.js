@@ -12,6 +12,10 @@ const Container = styled.div`
   align-items: center;
   width:100vw;
   height:100vh;
+  @media only screen and (max-width: 700px){
+    font-size:15px;
+    padding: 2% 5%;
+  }
 `;
 
 const Button = styled.button`
@@ -52,6 +56,13 @@ const BoolItem=styled.div`
   justify-content:space-around;
   align-items:center;
   border-bottom: 1px solid gray;
+
+  @media only screen and (max-width: 700px){
+    font-size:15px;
+    p{
+      max-width:15%;
+    }
+  }
   div{
     width:80%;
     p{
@@ -66,6 +77,9 @@ const BoolItem=styled.div`
       margin-bottom:5px;
       margin-top:-30px;
       width:100px;
+      @media only screen and (max-width: 700px){
+        max-width:30%;
+      }
     }
     .selected{
       background-color:SlateBlue;
