@@ -93,8 +93,8 @@ const ButtonContainer = styled.div`
   }
 
   & .left{
-    opacity:0;
-    cursor:default;
+    background-color:Tomato;
+    color:white;
     justify-self:flex-start;
   }
 
@@ -104,7 +104,7 @@ const ButtonContainer = styled.div`
   }
 `;
 
-export const Modal = ({showModal,setShowModal,save}) =>{
+export const Edit = ({showModal,setShowModal,updateList,deleteForm,index}) =>{
   const modalRef = useRef();
 
   const animation = useSpring({
@@ -141,22 +141,36 @@ export const Modal = ({showModal,setShowModal,save}) =>{
   const [formName, setFormName] = useState('');
   const [formType, setFormType] = useState('');
 
+  useEffect(() => {
+    let arr = localStorage.getItem('formList');
+    arr = JSON.parse(arr);
+    if (arr!=null && arr.length>0){
+      setFormName(arr[index].name);
+      setFormType(arr[index].type);
+    }
+  },[showModal]);
+
   const handleChange = (e) =>{
     const {value} = e.target;
     setFormName(value);
   };
 
-  const handleSave = () => {
+  const handleUpdate = (e) => {
+    e.preventDefault();
     if(formType !== '' && formName !== ''){
-      let formObj = {};
-      formObj['name'] = formName;
-      formObj['type'] = formType;
-      save(formObj);
-      setFormType('');
-      setFormName('');
+      let tempObj={};
+      tempObj['name'] = formName;
+      tempObj['type'] = formType;
+      updateList(tempObj,index);
     } else {
       alert('Kérem válassza ki a form típusát és töltse ki a név mezőt!');
     }
+  }
+
+  const handleDelete = () =>{
+    deleteForm(index);
+    setFormType('');
+    setFormName('');
   }
 
   return(
@@ -166,11 +180,11 @@ export const Modal = ({showModal,setShowModal,save}) =>{
           <animated.div style={animation}>
             <ModalContent showModal={showModal}>
                 <Header>
-                Új űrlap mező hozzáadása
+                Űrlap mező szerkesztése
                 <CloseModalButton aria-label='Close modal' onClick={() => setShowModal(prev=>!prev)}/>
                 </Header>
                 <Block>
-                  <Form setFormType={setFormType}/>
+                  <Form setFormType={setFormType} formType={formType}/>
                   <Switch rounded={true} data={list[0]}/>
                   <Switch rounded={true} data={list[1]}/>
                 </Block>
@@ -179,10 +193,10 @@ export const Modal = ({showModal,setShowModal,save}) =>{
                 <input className="textarea" type="textarea" value = {formName} onChange = {handleChange}/>
               </Block>
               <ButtonContainer>
-                <button className="left"></button>
+                <button className="left" onClick={handleDelete}>Mező törlése</button>
                 <div className="right">
                   <button onClick={() => (setShowModal(prev=>!prev), setFormType(''), setFormName(''))}>Mégsem</button>
-                  <button onClick={handleSave}>Létrehozás</button>
+                  <button onClick={handleUpdate}>Frissítés</button>
                 </div>
               </ButtonContainer>
               </ModalContent>

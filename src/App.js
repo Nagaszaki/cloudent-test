@@ -3,6 +3,7 @@ import { useState,useEffect } from 'react';
 import { Modal } from './components/modal/modal';
 import { GlobalStyle } from './globalStyle';
 import Welcome from './components/welcome/welcome';
+import {Edit} from './components/modal/edit';
 
 const Container = styled.div`
   padding:2% 20%;
@@ -65,31 +66,37 @@ const BoolItem=styled.div`
       width:100px;
     }
   }
+  img:nth-child(3){
+    cursor:pointer;
+  }
 `
 
 const TextItem=styled.div`
-display:flex;
-justify-content:space-around;
-align-items:center;
-padding:10px;
-border-bottom:1px solid gray;
-width:100%;
-div{
-  width:80%;
-  p{
-    margin-top:10px;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  padding:10px;
+  border-bottom:1px solid gray;
+  width:100%;
+  div{
+    width:80%;
+    p{
+      margin-top:10px;
+    }
+    button{
+      float:right;
+      padding:5px;
+      margin-bottom:5px;
+      width:100px;
+    }
+    input{
+      width:100%;
+      height:200px;
+    }
   }
-  button{
-    float:right;
-    padding:5px;
-    margin-bottom:5px;
-    width:100px;
+  img:nth-child(3){
+    cursor:pointer;
   }
-  input{
-    width:100%;
-    height:200px;
-  }
-}
 `
 
 function App() {
@@ -102,7 +109,6 @@ function App() {
   const [list,setList] = useState([]);
 
   const saveForm = (formObj) =>{
-    formObj['index'] = list.length;
     let tempList = list;
     tempList.push(formObj);
     localStorage.setItem('formList', JSON.stringify(tempList));
@@ -116,33 +122,54 @@ function App() {
       let obj = JSON.parse(arr);
       setList(obj);
     }
-    
   },[]);
 
   const deleteForm = (index) => {
     let tempList = list;
     tempList.splice(index,1);
-    localStorage.setItem('List', JSON.stringify(tempList));
+    localStorage.setItem('formList', JSON.stringify(tempList));
     setList(tempList);
+    setModal(false);
   }
+
+  const [modal,setModal] = useState(false);
+
+  const [currentIndex,setCurrentIndex] = useState(0);
+
+
+  const toggle = () => {
+    setModal(!modal);
+  }
+
+  const updateList = (obj,index) => {
+    let tempList = list;
+    tempList[index] = obj;
+    localStorage.setItem("formList", JSON.stringify(tempList));
+    setList(tempList);
+    window.location.reload();
+  }
+
 
   return (
     <>
       <Container>
         <Welcome/>
         <FieldContainer>
-        {list.map((obj)=>
+        {list && list.map((obj,index)=>
           (obj.type === 'bool' ? 
           <>
-          <BoolItem><img src="assets/Drag handle.svg"/>
-          <div><p>{obj.name}</p>
-          <button>Nem</button><button>Igen</button></div>
-          <img src="assets/Edit_icon.svg"/></BoolItem>
+          <BoolItem>
+            <img src="assets/Drag handle.svg"/>
+            <div>
+              <p>{obj.name}</p>
+              <button>Nem</button><button>Igen</button>
+            </div>
+            <img src="assets/Edit_icon.svg" alt={index} onClick={(e) => (setCurrentIndex(e.target.alt), setModal(true))}/></BoolItem>
           </>: 
           <>
           <TextItem><img src="assets/Drag handle.svg"/><div>{obj.name}
           <button>Nem</button><button>Igen</button>
-            <br/><input type="textarea"/></div><img src="assets/Edit_icon.svg"/>
+            <br/><input type="textarea"/></div><img src="assets/Edit_icon.svg" alt={index} onClick={(e) => (setCurrentIndex(e.target.alt), setModal(true))}/>
             </TextItem>
           </>)
         )
@@ -151,8 +178,12 @@ function App() {
         </FieldContainer>
         <Modal showModal={showModal} 
           setShowModal={setShowModal}
-          save = {saveForm}
-          deleteForm={deleteForm}></Modal>
+          save = {saveForm}/>
+          <Edit showModal={modal} 
+          setShowModal={toggle}
+          deleteForm={deleteForm}
+          updateList = {updateList}
+          index = {currentIndex}/>
         <GlobalStyle/>
       </Container>
     </>
