@@ -11,7 +11,6 @@ const Container = styled.div`
   flex-direction:column;
   align-items: center;
   width:100vw;
-  background-color:AliceBlue;
   height:100vh;
 `;
 
@@ -59,11 +58,18 @@ const BoolItem=styled.div`
       margin-top:10px;
     }
     button{
+      cursor:pointer;
+      border:none;
+      border-radius:5px;
       float:right;
       padding:5px;
       margin-bottom:5px;
       margin-top:-30px;
       width:100px;
+    }
+    .selected{
+      background-color:SlateBlue;
+      color:white;
     }
   }
   img:nth-child(3){
@@ -83,7 +89,14 @@ const TextItem=styled.div`
     p{
       margin-top:10px;
     }
+    .selected{
+      background-color:SlateBlue;
+      color:white;
+    }
     button{
+      cursor:pointer;
+      border:none;
+      border-radius:5px;
       float:right;
       padding:5px;
       margin-bottom:5px;
@@ -149,6 +162,16 @@ function App() {
     window.location.reload();
   }
 
+  const updateSelected = (index,value) =>{
+    value = parseInt(value);
+    index = parseInt(index);
+    let tempList = list;
+    tempList[index].basicValue = value;
+    localStorage.setItem("formList", JSON.stringify(tempList));
+    setList(tempList);
+    window.location.reload();
+  }
+
 
   return (
     <>
@@ -162,14 +185,43 @@ function App() {
             <img src="assets/Drag handle.svg"/>
             <div>
               <p>{obj.name}</p>
-              <button>Nem</button><button>Igen</button>
+              {obj.basicValue === 2 ? 
+              <> <button name={index} class="selected" value={2} onClick={(e)=> updateSelected(e.target.name,e.target.value)}>Nem</button>
+              <button onClick={(e)=> updateSelected(e.target.name,e.target.value)} name={index} value={1}>Igen</button> 
+              </>: null}
+
+              {obj.basicValue === 1 ?
+               <> <button name={index} value={2} onClick={(e)=> updateSelected(e.target.name,e.target.value)}>Nem</button>
+               <button onClick={(e)=> updateSelected(e.target.name,e.target.value)} name={index} class="selected" value={1}>Igen</button> 
+               </>: null}
+
+              {obj.basicValue === 0 ? <> <button name={index} value={2} onClick={(e)=> updateSelected(e.target.name,e.target.value)}>Nem</button>
+              <button onClick={(e)=> updateSelected(e.target.name,e.target.value)} name={index} value={1}>Igen</button> 
+              </>: null}
             </div>
-            <img src="assets/Edit_icon.svg" alt={index} onClick={(e) => (setCurrentIndex(e.target.alt), setModal(true))}/></BoolItem>
+            <img src="assets/Edit_icon.svg" alt={index} onClick={(e) => (setCurrentIndex(e.target.alt), setModal(true))}/>
+            </BoolItem>
           </>: 
           <>
-          <TextItem><img src="assets/Drag handle.svg"/><div>{obj.name}
-          <button>Nem</button><button>Igen</button>
-            <br/><input type="textarea"/></div><img src="assets/Edit_icon.svg" alt={index} onClick={(e) => (setCurrentIndex(e.target.alt), setModal(true))}/>
+          <TextItem>
+            <img src="assets/Drag handle.svg"/>
+            <div>
+              <p>{obj.name}</p>
+              {obj.basicValue === 2 ? 
+              <> <button name={index} class="selected" value={2} onClick={(e)=> updateSelected(e.target.name,e.target.value)}>Nem</button>
+              <button onClick={(e)=> updateSelected(e.target.name,e.target.value)} name={index} value={1}>Igen</button> 
+              </>: null}
+
+              {obj.basicValue === 1 ?
+               <> <button name={index} value={2} onClick={(e)=> updateSelected(e.target.name,e.target.value)}>Nem</button>
+               <button onClick={(e)=> updateSelected(e.target.name,e.target.value)} name={index} class="selected" value={1}>Igen</button> 
+               </>: null}
+
+              {obj.basicValue === 0 ? <> <button name={index} value={2} onClick={(e)=> updateSelected(e.target.name,e.target.value)}>Nem</button>
+              <button onClick={(e)=> updateSelected(e.target.name,e.target.value)} name={index} value={1}>Igen</button> 
+              </>: null}
+            <br/><input type="textarea"/></div>
+            <img src="assets/Edit_icon.svg" alt={index} onClick={(e) => (setCurrentIndex(e.target.alt), setModal(true))}/>
             </TextItem>
           </>)
         )

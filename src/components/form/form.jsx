@@ -1,20 +1,19 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './form.scss';
 
-export default function Form({setFormType,formType}) {
-
+export default function Form({setFormType,formType,basicValue,setBasicValue}) {
   const basic_value = [
     {
       tag: 'Nincs',
-      value: 'none'
+      basicValue: 0
     },
     {
       tag: 'Igen',
-      value: 'yes'
+      basicValue: 1
     },
     {
       tag: 'Nem',
-      value: 'no'
+      basicValue: 2
     },    
   ];
 
@@ -22,6 +21,10 @@ export default function Form({setFormType,formType}) {
     const {value} = e.target;
     setFormType(value);
   };
+
+  const changeValue = (e) => {
+    setBasicValue(e);
+  }
 
 
   return (
@@ -48,8 +51,11 @@ export default function Form({setFormType,formType}) {
           <div className="radio">
             {basic_value.map((item) => (
               <>
-                <input type="radio" name="default_value" value={item.value}></input>
-                <label for={item.value}>{item.tag}</label>
+                {basicValue === item.basicValue?<> 
+                <input checked type="radio" name="default_value" onClick={(e) => changeValue(item.basicValue)} value={item.basicValue}></input>
+                <label for={item.basicValue} onClick={(e) => changeValue(item.basicValue)}>{item.tag}</label></>
+              :<><input type="radio" name="default_value" onClick={(e) => changeValue(item.basicValue)} value={item.basicValue}></input>
+              <label for={item.basicValue} onClick={(e) => changeValue(item.basicValue)}>{item.tag}</label></>}
               </>
             ))}
           </div>

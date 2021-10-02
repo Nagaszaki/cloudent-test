@@ -6,8 +6,8 @@ export default function Welcome() {
     <div className = "welcome">
       <h2>Anamnézis mezők</h2>
       <div className = "information">
-        <img src="assets/help_black_24dp.svg"/>
-      <p>Itt tudod szerkeszteni a páciens egészségügyi anamnézis mezőket blablaab további leírás még ide. <br/> <a href="@">Nézd meg videónkat és leírást itt</a></p>
+        <img alt="?" src="assets/help_black_24dp.svg"/>
+      <p>Itt tudod szerkeszteni a páciens egészségügyi anamnézis mezőket blablaab további leírás még ide. <br/> <a target="_blank" href="https://cloudent.hu">Nézd meg videónkat és leírást itt</a></p>
       
       </div>
       <h3>Anamnézis űrlap</h3>

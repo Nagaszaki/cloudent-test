@@ -41,6 +41,9 @@ const ModalContent = styled.div`
   align-items: center;
   line-height: 1.8;
   color: #141414;
+  @media only screen and (max-width: 700px){
+    width:80vw;
+  }
 
 `;
 
@@ -107,6 +110,8 @@ const ButtonContainer = styled.div`
 export const Edit = ({showModal,setShowModal,updateList,deleteForm,index}) =>{
   const modalRef = useRef();
 
+  const [basicValue,setBasicValue] = useState(0);
+
   const animation = useSpring({
     config:{
       duration: 250
@@ -120,12 +125,16 @@ export const Edit = ({showModal,setShowModal,updateList,deleteForm,index}) =>{
       setShowModal(false);
       setFormType('');
       setFormName('');
+      setBasicValue(0);
     }
   };
   
   const keyPress = useCallback(e =>{
     if(e.key === 'Escape' && showModal){
       setShowModal(false);
+      setFormType('');
+      setFormName('');
+      setBasicValue(0);
     }
   }, [setShowModal,showModal]);
 
@@ -144,9 +153,10 @@ export const Edit = ({showModal,setShowModal,updateList,deleteForm,index}) =>{
   useEffect(() => {
     let arr = localStorage.getItem('formList');
     arr = JSON.parse(arr);
-    if (arr!=null && arr.length>0){
+    if (arr!=null && arr.length > 0){
       setFormName(arr[index].name);
       setFormType(arr[index].type);
+      setBasicValue(arr[index].basicValue);
     }
   },[showModal]);
 
@@ -161,6 +171,7 @@ export const Edit = ({showModal,setShowModal,updateList,deleteForm,index}) =>{
       let tempObj={};
       tempObj['name'] = formName;
       tempObj['type'] = formType;
+      tempObj['basicValue'] = basicValue;
       updateList(tempObj,index);
     } else {
       alert('Kérem válassza ki a form típusát és töltse ki a név mezőt!');
@@ -171,6 +182,7 @@ export const Edit = ({showModal,setShowModal,updateList,deleteForm,index}) =>{
     deleteForm(index);
     setFormType('');
     setFormName('');
+    setBasicValue(0);
   }
 
   return(
@@ -184,7 +196,7 @@ export const Edit = ({showModal,setShowModal,updateList,deleteForm,index}) =>{
                 <CloseModalButton aria-label='Close modal' onClick={() => setShowModal(prev=>!prev)}/>
                 </Header>
                 <Block>
-                  <Form setFormType={setFormType} formType={formType}/>
+                  <Form setFormType={setFormType} formType={formType} basicValue = {basicValue} setBasicValue={setBasicValue}/>
                   <Switch rounded={true} data={list[0]}/>
                   <Switch rounded={true} data={list[1]}/>
                 </Block>

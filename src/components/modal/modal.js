@@ -42,6 +42,10 @@ const ModalContent = styled.div`
   line-height: 1.8;
   color: #141414;
 
+  @media only screen and (max-width: 700px){
+    width:80vw;
+  }
+
 `;
 
 const CloseModalButton = styled(MdClose)`
@@ -107,6 +111,8 @@ const ButtonContainer = styled.div`
 export const Modal = ({showModal,setShowModal,save}) =>{
   const modalRef = useRef();
 
+  const [basicValue,setBasicValue] = useState(0);
+
   const animation = useSpring({
     config:{
       duration: 250
@@ -120,12 +126,16 @@ export const Modal = ({showModal,setShowModal,save}) =>{
       setShowModal(false);
       setFormType('');
       setFormName('');
+      setBasicValue(0);
     }
   };
   
   const keyPress = useCallback(e =>{
     if(e.key === 'Escape' && showModal){
       setShowModal(false);
+      setFormType('');
+      setFormName('');
+      setBasicValue(0);
     }
   }, [setShowModal,showModal]);
 
@@ -151,9 +161,11 @@ export const Modal = ({showModal,setShowModal,save}) =>{
       let formObj = {};
       formObj['name'] = formName;
       formObj['type'] = formType;
+      formObj['basicValue'] = basicValue;
       save(formObj);
       setFormType('');
       setFormName('');
+      setBasicValue(0);
     } else {
       alert('Kérem válassza ki a form típusát és töltse ki a név mezőt!');
     }
@@ -170,7 +182,7 @@ export const Modal = ({showModal,setShowModal,save}) =>{
                 <CloseModalButton aria-label='Close modal' onClick={() => setShowModal(prev=>!prev)}/>
                 </Header>
                 <Block>
-                  <Form setFormType={setFormType}/>
+                  <Form setFormType={setFormType} basicValue={basicValue} setBasicValue={setBasicValue}/>
                   <Switch rounded={true} data={list[0]}/>
                   <Switch rounded={true} data={list[1]}/>
                 </Block>
